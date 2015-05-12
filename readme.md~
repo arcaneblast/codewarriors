@@ -6,3 +6,6 @@ For More Details contact:
 it-elias@hotmail.com, eahosmi@acm.org.
 
 Thank you for your time and consideration
+
+//bugs
+printing to the file nulls with fprintf just wieeered
