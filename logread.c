@@ -56,6 +56,32 @@ int asc_comparer(const void *p1, const void *p2)
     return (*num1 - *num2);
 }
 
+int check_if_in_galary(char *name, int log_count)
+{
+    int where = OUTGALARY;
+    int i;
+    for (i = 0; i < log_count; i++)
+        if (stringEquals(logarray[i].name, name))
+            where = logarray[i].where;
+
+    if (where != OUTGALARY)
+        return true;
+    return false;
+}
+
+int check_if_in_room(char *name, int log_count,int roomid)
+{
+    int where = OUTGALARY;
+    int i;
+    for (i = 0; i < log_count; i++)
+        if (stringEquals(logarray[i].name, name))
+            where = logarray[i].where;
+
+    if (where == roomid)
+        return true;
+    return false;
+}
+
 int fill_log_array(FILE* input)
 {
     int time, type, where;
@@ -73,13 +99,25 @@ int fill_log_array(FILE* input)
     return i;
 }
 
+int find_name_already(char * name, char ** list, int count)
+{
+    int i;
+    for (i = 0; i < count; i++)
+    {
+        if (stringEquals(name, list[i]))
+            return true;
+    }
+    return false;
+}
+
 int get_guest_names_list(char **list, int log_count)
 {
     int count = 0, i;
 
     for (i = 0; i < log_count; i++)
     {
-        if (logarray[i].type = GUESTTYPE)
+        if (logarray[i].type == GUESTTYPE && !find_name_already(logarray[i].name, list, count)
+                && check_if_in_galary(logarray[i].name, log_count))
             strcpy(list[count++], logarray[i].name);
     }
     qsort(list, count, sizeof (char *), string_comparer);
@@ -92,7 +130,8 @@ int get_employee_names_list(char **list, int log_count)
 
     for (i = 0; i < log_count; i++)
     {
-        if (logarray[i].type = EMPLOYEETYPE)
+        if (logarray[i].type == EMPLOYEETYPE &&!find_name_already(logarray[i].name, list, count)
+                && check_if_in_galary(logarray[i].name, log_count))
             strcpy(list[count++], logarray[i].name);
     }
     qsort(list, count, sizeof (char *), string_comparer);
@@ -139,8 +178,11 @@ int who_is_in_room(char ** list, int roomid, int log_count)
     int i, count = 0;
     for (i = 0; i < log_count; i++)
     {
-        if (logarray[i].where == roomid)
-            list[count++] = logarray[i].name;
+        if (logarray[i].where == roomid && !find_name_already(logarray[i].name, list, count))
+        {
+            if (check_if_in_room(logarray[i].name, log_count, roomid))
+                list[count++] = logarray[i].name;
+        }
     }
     qsort(list, count, sizeof (char *), string_comparer);
     return count;
@@ -317,9 +359,9 @@ int tokenizing(char * line, char** argv_output)
 int main(int argc, char** argv)
 {
     //checking
-    //int argc = 11;
-    //char* argv[] = {"logappend", "-K", "secret", "-T", "13" ,"-A" ,"-R",  "0", "-E" ,"John", "/root/Documents/NetBeansProjects/bibifi-final/dist/Debug/GNU-Linux-x86/log2"};
-    //char* argv[] = {"logappend", "-B", "/root/Documents/NetBeansProjects/bibifi-final/dist/Debug/GNU-Linux-x86/hello"};
+    //int argc = 5;
+    //char* argv[] = {"logread", "-K", "secret", "-R", "/root/Desktop/.hidden/bibifi/log1"};
+    //char* argv[] = {"logread", "-B", "/root/Documents/NetBeansProjects/bibifi-final/dist/Debug/GNU-Linux-x86/hello"};
     if (argc < 5)
         normalExit(); // parameter number if too low
 
@@ -450,7 +492,7 @@ int main(int argc, char** argv)
             {
                 int who_count = who_is_in_room(guestlist, room_ids[i], log_count);
                 if (who_count != 0)
-                    printf("%d: ");
+                    printf("%d: ", room_ids[i]);
 
                 for (j = 0; j < who_count; j++)
                 {
