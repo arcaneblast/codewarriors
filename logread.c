@@ -420,6 +420,7 @@ int main(int argc, char** argv)
     if (rflag) count_true++;
     if (tflag) count_true++;
 
+    if (token == NULL) normalExit();
     if (count_true != 1) normalExit();
     if (employeename != NULL && guestname != NULL && rflag) normalExit();
     if (employeename == NULL && guestname == NULL && rflag) normalExit();
