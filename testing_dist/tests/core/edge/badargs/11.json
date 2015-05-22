@@ -1,0 +1,43 @@
+{
+    "tests": [
+        {
+            "input": "logappend -T 1 -K UBSVZGIX -E JOSHUA -A TPWMVDMZ"
+        },
+        {
+            "input": "logappend -T 2 -K UBSVZGIX -E JOSHUA -A -R 2 TPWMVDMZ"
+        },
+        {
+            "input": "logappend -T 3 -K UBSVZGIX -G NOELLE -A TPWMVDMZ"
+        },
+        {
+            "input": "logappend -T 4 -K UBSVZGIX -G SHENITA -A TPWMVDMZ"
+        },
+        {
+            "input": "logappend -T 5 -K UBSVZGIX -G NOELLE -L TPWMVDMZ"
+        },
+        {
+            "input": "logappend -V 5 -K UBSVZGIX -G NOELLE -L TPWMVDMZ",
+            "output": "invalid",
+            "exit": 255
+        },
+        {
+            "input": "logappend -T 6 -K UBSVZGIX -E KATHY -A TPWMVDMZ"
+        },
+        {
+            "input": "logappend -T 7 -K UBSVZGIX -G WARD -A TPWMVDMZ"
+        },
+        {
+            "input": "logappend -T 8 -K UBSVZGIX -E KATHY -L TPWMVDMZ"
+        },
+        {
+            "input": "logappend -T 9 -K UBSVZGIX -E JOSHUA -L -R 2 TPWMVDMZ"
+        },
+        {
+            "input": "logappend -T 10 -K UBSVZGIX -E JOSHUA -A -R 11 TPWMVDMZ"
+        },
+        {
+            "input": "logread -K UBSVZGIX -S TPWMVDMZ",
+            "output": "JOSHUA\nSHENITA,WARD\n11: JOSHUA"
+        }
+    ]
+}

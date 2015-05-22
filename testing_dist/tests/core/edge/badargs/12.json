@@ -1,0 +1,36 @@
+{
+    "tests": [
+        {
+            "input": "logappend -T 1 -K FFZGYPUD -G SOL -A TCBZXYQX"
+        },
+        {
+            "input": "logappend -T 2 -K FFZGYPUD -G SOL -A -R 11 TCBZXYQX"
+        },
+        {
+            "input": "logappend -T 3 -K FFZGYPUD -G SOL -L -R 11 TCBZXYQX"
+        },
+        {
+            "input": "logappend -T 4 -K FFZGYPUD -G SOL -A -R 14 TCBZXYQX"
+        },
+        {
+            "input": "logappend -T 5 -K FFZGYPUD -E ANNMARIE -A TCBZXYQX"
+        },
+        {
+            "input": "logappend -T 6 -K FFZGYPUD -G SOL -L -R 14 TCBZXYQX"
+        },
+        {
+            "input": "logappend -T 7 -K FFZGYPUD -G SOL -A -R 16 TCBZXYQX"
+        },
+        {
+            "input": "logappend -T 8 -K FFZGYPUD -G SOL -L -R 16 TCBZXYQX"
+        },
+        {
+            "input": "logappend -T 9 -K FFZGYPUD -G SOL -A -R 14 TCBZXYQX"
+        },
+        {
+            "input": "logread -K FFZGYPUD -Z TCBZXYQX",
+            "output": "invalid",
+            "exit": 255
+        }
+    ]
+}
